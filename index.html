@@ -1,1 +1,222 @@
-hello
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>🐠</title>
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,600" rel="stylesheet">
+  <style>
+  body {
+    padding: 0 20px;
+    font-family: 'Muli', sans-serif;
+    color: rgba(62, 62, 62, 0.8);
+    background: #f7f5f5;
+  }
+  h1 {
+  z-index: 10;
+  position: relative;
+  margin-top: 270px;
+  }
+  .high {
+    color: #2db8f7;
+    font-weight: 600;
+  }
+  code {
+    padding: 20px;
+    position: absolute;
+    background: #e4e4e4;
+    top: 0;
+    right: 0;
+    font-size: 10px;
+    opacity: 0.6;
+    border-radius: 0 0 0 5px;
+  }
+  code:hover {
+    opacity: 0.9;
+  }
+  .contacts-list {
+    list-style-type: none;
+      padding-left: 0;
+  }
+  .contact-list__anchor {
+    text-decoration: none;
+    color: inherit;
+    padding-left: 20px;
+    border-left: 4px solid;
+    border-left-color: transparent;
+  }
+  .contact-list__anchor:hover {
+    color: black;
+  }
+  .contact-list__anchor--tw:hover {
+    border-left: 4px solid;
+    border-left-color: #1da1f2;
+  }
+  .contact-list__anchor--gh:hover {
+    border-left-color: #1e2327;
+  }
+  .contact-list__anchor--md:hover {
+    border-left-color: #00ab6b;
+  }
+  .contact-list__anchor--pk:hover {
+    border-left-color: rgba(239,64,86,0.9);
+  }
+  .contact-list__anchor--so:hover {
+    border-left-color: #f69c55;
+  }
+  .contact-list__anchor--username {
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 10px;
+  }
+  .contact-list__anchor:hover .contact-list__anchor--username {
+    opacity: 0.4;
+  }
+  @keyframes flow {
+      30% {fill: #00bcd4;}
+      50% {fill: gold;}
+      80% {fill: #009688;}
+      7% {fill: #e91e63;}
+  }
+  .node {
+      fill: #e91e63;
+      stroke: #eee;
+      stroke-width: 1px;
+      animation-name: flow;
+      animation-duration: 24s;
+      animation-iteration-count: 5;
+  }
+  .edge {
+      stroke: #dedede;
+      stroke-width: 1px;
+  }
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  </style>
+</head>
+<body>
+    <h1>Aurelio</h1>
+    <article>
+      <p>
+        Frontend Developer in <span class="high">London</span>
+        <ul class="contacts-list">
+          <li>
+            <a class="contact-list__anchor contact-list__anchor--tw" href="https://twitter.com/aureliari">Twitter
+            <span class="contact-list__anchor--username">@aureliari</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact-list__anchor contact-list__anchor--gh" href="https://github.com/nobitagit">Github
+            <span class="contact-list__anchor--username">@nobitagit</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact-list__anchor contact-list__anchor--md" href="https://medium.com/@nobita_">Medium
+            <span class="contact-list__anchor--username">@nobita_</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact-list__anchor contact-list__anchor--pk" href="https://getpocket.com/@b82p6Tm6A02b6d7ao7g55c4g38d5AzT152aS05e25dN150ZU646dtRa7y77aR612">Pocket
+            <span class="contact-list__anchor--username">Aurelio Ogliari</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact-list__anchor contact-list__anchor--so" href="http://stackoverflow.com/users/1446845/nobita?tab=profile">Stack Overflow
+            <span class="contact-list__anchor--username">@nobita</span>
+            </a>
+          </li>
+        </ul>
+      </p>
+    </article>
+    <p>
+      <code>
+        atob('YXVyZWxpby5vZ2xpYXJpQGdtYWlsLmNvbQ=='); // mail
+      </code>
+    </p>
+
+    <script src='http://d3js.org/d3.v3.min.js'></script>
+    <script>
+
+    const width = 380;
+    const height = width;
+    const padding = width / 18;
+
+    let random = (min, max) => ~~(Math.random() * (max  - min)) + min;
+
+    let buildNodes = (max = 40, a = [], i = 0) => {
+      if (i === max ) { return a; }
+      return buildNodes(max, a.concat({
+        x: random(padding, width - padding),
+        y: random(padding, width - padding),
+      }), ++i);
+    }
+    let buildEdges = (max = 50, a = [], i = 0) => {
+      if (i === max ) { return a; }
+      return buildEdges(max, a.concat({
+        target: random(1, 40),
+        source: random(0, 40),
+      }), ++i);
+    };
+    const graph = {
+      nodes:  buildNodes(),
+      links:  buildEdges(),
+    };
+
+  const svg = d3.select('body').append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+  const nodes = graph.nodes;
+  const edges = graph.links;
+
+  const force = d3.layout.force()
+      .size([width/2, height/2])
+      .nodes(nodes)
+      .links(edges);
+
+  force.linkDistance(width / 3.5).charge(-200);
+
+  let edge = svg.selectAll('.edge')
+      .data(edges)
+      .enter().append('line')
+      .attr('class', 'edge')
+      .attr('x1', d => nodes[d.source].x)
+      .attr('y1', d => nodes[d.source].y)
+      .attr('x2', d => nodes[d.target].x)
+      .attr('y2', d => nodes[d.target].y);
+
+  let node = svg.selectAll('.node')
+      .data(nodes)
+      .enter().append('circle')
+      .attr('class', 'node')
+      .style('animation-delay', (d, i) => i * 0.18 + 's')
+      .attr('r', width / 100)
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
+
+  const tick = timer => () => {
+    node.transition().ease('easePolyIn').duration(timer)
+          .attr('cx', d => d.x)
+          .attr('cy', d => d.y);
+
+      edge.transition().ease('easePolyIn').duration(timer)
+          .attr('x1', d => d.source.x)
+          .attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x)
+          .attr('y2', d => d.target.y);
+
+      force.stop();
+      setTimeout(force.start, timer);
+  }
+
+  force.on('tick', tick(3500));
+  force.start();
+
+  </script>
+</body>
+</html>

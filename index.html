@@ -15,6 +15,11 @@
         color: rgba(62, 62, 62, 0.8);
         background: #f7f5f5;
       }
+      .header {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+      }
       .triangle {
         width: 20rem;
         height: 20rem;
@@ -24,6 +29,7 @@
         pointer-events: none;
         border-radius: 20%;
         opacity: 0.6;
+        margin-left: -30px;
       }
       .triangle:before,
       .triangle:after {
@@ -47,15 +53,37 @@
         transform: scaleX(1.155) skewY(-30deg) rotate(-30deg) translateY(-42.3%)
           skewX(-30deg) scaleY(0.866) translateX(24%);
       }
+      @keyframes rollin {
+        from {
+          transform: translate(-1000px, 40px);
+        }
+        to {
+          transform: translate(-110.8px, 40px);
+        }
+      }
       .circle {
+        width: 240px;
+        height: 240px;
+        background: linear-gradient(to top, red 0%, blue 100%);
+        background: #ffb100;
+        background: #51ebcc;
+        animation: rollin 5s;
+        transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
+        transition: all 4s;
+        transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+        animation-fill-mode: forwards;
+        z-index: -1;
+        border-radius: 100%;
+        opacity: 0.8;
+        margin-top: 10px;
       }
       h1 {
         z-index: 10;
         position: relative;
-        margin-top: 270px;
+        margin-top: 80px;
       }
       .high {
-        color: #2db8f7;
+        color: #ff7acd;
         font-weight: 600;
       }
       code {
@@ -161,10 +189,10 @@
       <div class="circle"></div>
     </header>
 
-    <h1>Aurelio</h1>
+    <h1><span>A</span>urelio <span>O</span>gliari</h1>
     <article>
       <div>
-        Frontend Engineer & Engineering Manager in
+        Software Engineer in
         <span class="high">Berlin</span>
         <span class="main-copy">
           From Italy, via the UK.
@@ -231,83 +259,5 @@
     <p>
       <code> atob('YXVyZWxpby5vZ2xpYXJpQGdtYWlsLmNvbQ=='); // mail </code>
     </p>
-
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script>
-      //   const width = 380;
-      //   const height = width;
-      //   const padding = width / 18;
-
-      //   let random = (min, max) => ~~(Math.random() * (max  - min)) + min;
-
-      //   let buildNodes = (max = 40, a = [], i = 0) => {
-      //     if (i === max ) { return a; }
-      //     return buildNodes(max, a.concat({
-      //       x: random(padding, width - padding),
-      //       y: random(padding, width - padding),
-      //     }), ++i);
-      //   }
-      //   let buildEdges = (max = 50, a = [], i = 0) => {
-      //     if (i === max ) { return a; }
-      //     return buildEdges(max, a.concat({
-      //       target: random(1, 40),
-      //       source: random(0, 40),
-      //     }), ++i);
-      //   };
-      //   const graph = {
-      //     nodes:  buildNodes(),
-      //     links:  buildEdges(),
-      //   };
-
-      // const svg = d3.select('body').append('svg')
-      //   .attr('width', width)
-      //   .attr('height', height);
-
-      // const nodes = graph.nodes;
-      // const edges = graph.links;
-
-      // const force = d3.layout.force()
-      //     .size([width/2, height/2])
-      //     .nodes(nodes)
-      //     .links(edges);
-
-      // force.linkDistance(width / 3.5).charge(-200);
-
-      // let edge = svg.selectAll('.edge')
-      //     .data(edges)
-      //     .enter().append('line')
-      //     .attr('class', 'edge')
-      //     .attr('x1', d => nodes[d.source].x)
-      //     .attr('y1', d => nodes[d.source].y)
-      //     .attr('x2', d => nodes[d.target].x)
-      //     .attr('y2', d => nodes[d.target].y);
-
-      // let node = svg.selectAll('.node')
-      //     .data(nodes)
-      //     .enter().append('circle')
-      //     .attr('class', 'node')
-      //     .style('animation-delay', (d, i) => i * 0.18 + 's')
-      //     .attr('r', width / 100)
-      //     .attr('cx', d => d.x)
-      //     .attr('cy', d => d.y);
-
-      // const tick = timer => () => {
-      //   node.transition().ease('easePolyIn').duration(timer)
-      //         .attr('cx', d => d.x)
-      //         .attr('cy', d => d.y);
-
-      //     edge.transition().ease('easePolyIn').duration(timer)
-      //         .attr('x1', d => d.source.x)
-      //         .attr('y1', d => d.source.y)
-      //         .attr('x2', d => d.target.x)
-      //         .attr('y2', d => d.target.y);
-
-      //     force.stop();
-      //     setTimeout(force.start, timer);
-      // }
-
-      // force.on('tick', tick(3500));
-      // force.start();
-    </script>
   </body>
 </html>

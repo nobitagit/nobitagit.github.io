@@ -1,0 +1,23 @@
+{
+  "name": "nobitagit.github.io",
+  "version": "1.0.0",
+  "description": "my home",
+  "main": "index.html",
+  "dependencies": {
+    "prettier": "^2.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "format": "./node_modules/.bin/prettier -w index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nobitagit/nobitagit.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nobitagit/nobitagit.github.io/issues"
+  },
+  "homepage": "https://github.com/nobitagit/nobitagit.github.io#readme"
+}
